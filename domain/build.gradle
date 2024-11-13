@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.dcvideo.admin.catalogo.domain'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
+import java.time.Duration
+
+tasks.test {
+    // Define o timeout de 600 segundos (10 minutos)
+    timeout.set(Duration.ofSeconds(600))
+}
