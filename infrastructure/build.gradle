@@ -1,17 +1,32 @@
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.flywaydb:flyway-mysql:9.11.0'
+    }
+}
+
 plugins {
     id 'java'
+    id 'application'
+    id 'org.springframework.boot' version '2.6.7'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 }
 
 group = 'com.dcvideo.admin.catalogo.infrastructure'
-version = '1.0-SNAPSHOT'
 
-repositories {
-    mavenCentral()
-}
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation(project(":domain"))
+    implementation(project(":application"))
+    implementation('org.springframework.boot:spring-boot-starter-web') {
+        exclude module: 'spring-boot-starter-tomcat'
+    }
+    implementation('org.springframework.boot:spring-boot-starter-undertow')
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
 
 test {
