@@ -1,34 +1,46 @@
-
 buildscript {
     repositories {
         mavenCentral()
     }
-    dependencies {
-        classpath 'org.flywaydb:flyway-mysql:9.11.0'
-    }
+
 }
 
 plugins {
+
     id 'java'
     id 'application'
     id 'org.springframework.boot' version '2.6.7'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+
 }
 
-group = 'com.dcvideo.admin.catalogo.infrastructure'
 
+group 'com.dcvideo.admin.catalogo.infrastructure'
+version '1.0-SNAPSHOT'
+
+bootJar {
+    archiveName 'application.jar'
+    destinationDirectory.set(file("${rootProject.buildDir}/libs"))
+}
+
+repositories {
+    mavenCentral()
+}
 
 dependencies {
     implementation(project(":domain"))
     implementation(project(":application"))
+
+    implementation('mysql:mysql-connector-java')
     implementation('org.springframework.boot:spring-boot-starter-web') {
         exclude module: 'spring-boot-starter-tomcat'
     }
     implementation('org.springframework.boot:spring-boot-starter-undertow')
-
     testImplementation('org.springframework.boot:spring-boot-starter-test')
-}
 
-test {
-    useJUnitPlatform()
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+    testRuntimeOnly('com.h2database:h2')
+
+    testImplementation('org.flywaydb:flyway-core')
+    testImplementation('org.flywaydb:flyway-mysql')
 }
